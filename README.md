@@ -29,7 +29,7 @@ _(buraya 2-3 ekran görüntüsü ekle)_
 
 ## 🛰️ GraphQL Endpoint
 
-GraphQL endpoint: `https://localhost:5001/graphql`
+GraphQL endpoint: `https://localhost:5135/graphql`
 
 Örnek sorgular için Altair / Postman dosyası eklenecektir.
 
