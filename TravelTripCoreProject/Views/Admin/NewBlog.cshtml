@@ -1,0 +1,25 @@
+﻿@model TravelTripCoreProject.Models.Classes.Blog
+
+@{
+    ViewBag.Title = "NewBlog";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yeni Blog Ekleme</h2>
+<br />
+<form asp-action="NewBlog" asp-controller="Admin" class="form-group" method="post">
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(x => x.Title,"Başlık")
+    @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.DateTime,"Tarih")
+    @Html.TextBoxFor(x => x.DateTime, new { @class = "form-control", type = "date" })
+    <br />
+    @Html.LabelFor(x => x.BlogImage,"Resim Linki")
+    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Description,"Açıklama")
+    @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-primary">Blog Ekle</button>
+</form>

@@ -1,0 +1,45 @@
+﻿@using TravelTripCoreProject.Models.Classes
+@model List<Blog>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["BlogResult"] != null)
+{
+    <div class="alert alert-info">@TempData["BlogResult"]</div>
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+<h2>Blog Listesi</h2>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>BAŞLIK</th>
+        <th>SİL</th>
+        <th>GÜNCELLE</th>
+        <th>DETAYLAR</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Title</td>
+            <td>
+                <form asp-action="DeleteBlog" asp-controller="Admin" asp-route-id="@item.Id" method="post" style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </form>
+            </td>
+            <td>
+                <a asp-action="GetBlog" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-success">Güncelle</a>
+            </td>
+            <td>
+                <a asp-action="BlogDetail" asp-controller="Blog" asp-route-id="@item.Id" class="btn btn-info">Detaylar</a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-action="NewBlog" asp-controller="Admin" class="btn btn-primary">Yeni Blog</a>

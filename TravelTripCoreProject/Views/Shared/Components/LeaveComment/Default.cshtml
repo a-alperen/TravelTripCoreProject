@@ -1,0 +1,22 @@
+﻿@model TravelTripCoreProject.Models.Classes.Comment
+@if (ViewBag.Errors != null && ((List<string>)ViewBag.Errors).Any())
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var err in (List<string>)ViewBag.Errors)
+            {
+                <li>@err</li>
+            }
+        </ul>
+    </div>
+}
+<div class="content-form">
+    <h3>Bir Yorum Yapın</h3>
+    <form asp-action="LeaveComment" asp-controller="Blog" method="post">
+        <input type="hidden" name="BlogId" value="@Model.BlogId" required />
+        <input type="text" placeholder="Kullanıcı Adı" name="Username" required />
+        <input type="text" placeholder="Email" name="Email" required />
+        <textarea placeholder="Yorum" name="UserComment" required></textarea>
+        <input type="submit" value="Gönder" />
+    </form>
+</div>

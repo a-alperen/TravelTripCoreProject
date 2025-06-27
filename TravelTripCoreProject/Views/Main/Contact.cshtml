@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<link href="~/web2/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="~/web2/css/style.css" rel='stylesheet' type='text/css' />
+<div class="single">
+    <div class="container">
+        <div class="col-md-8 single-main">
+            <div class="content-form">
+                @if (ViewBag.Message != null)
+                {
+                    <div>@ViewBag.Message</div>
+                }
+                <h3>İletişim</h3>
+                <form method="post">
+                    <input type="text" name="name" placeholder="Adınız" required />
+                    <input type="text" name="email" placeholder="Email" required />
+                    <input type="text" name="subject" placeholder="Konu" required />
+                    <textarea name="message" placeholder="Mesajınız" required></textarea>
+                    <input type="submit" value="Gönder" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

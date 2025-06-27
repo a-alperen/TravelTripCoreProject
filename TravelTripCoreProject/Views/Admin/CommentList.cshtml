@@ -1,0 +1,32 @@
+﻿@using TravelTripCoreProject.Models.Classes
+@model List<Comment>
+@{
+    ViewBag.Title = "CommentList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yorum Listesi</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Kullanıcı</th>
+        <th>Email</th>
+        <th>Yorum</th>
+        <th>Blog</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Username</td>
+            <td>@item.Email</td>
+            <td>@item.UserComment</td>
+            <td>@item.Blog?.Title</td>
+            <td><a asp-action="DeleteComment" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-danger">Sil</a></td>
+            <td><a asp-action="GetComment" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-warning">Güncelle</a></td>
+        </tr>
+    }
+</table>

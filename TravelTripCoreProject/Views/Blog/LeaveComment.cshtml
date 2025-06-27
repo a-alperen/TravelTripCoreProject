@@ -1,0 +1,12 @@
+﻿@model TravelTripCoreProject.Models.Classes.Comment
+
+<div class="content-form">
+    <h3>Bir Yorum Yapın</h3>
+    <form method="post">
+        <input type="hidden" name="blogId" value="@ViewBag.value" required/>
+        <input type="text" placeholder="Kullanıcı Adı" name="username" required />
+        <input type="text" placeholder="Email" name="email" required />
+        <textarea placeholder="Yorum" name="userComment" required></textarea>
+        <input type="submit" value="Gönder" />
+    </form>
+</div>

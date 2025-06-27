@@ -1,0 +1,24 @@
+﻿@using TravelTripCoreProject.Models.Classes
+@model List<Blog>
+
+<div class="padding1">
+    <h4>En Beğendiğim Yerler</h4>
+    <div class="box-left">
+        @foreach (var item in Model)
+        {
+            <div class="bot-img">
+                <img src="@item.BlogImage" style="width:120px; height:80px" alt="" />
+            </div>
+            <div class="bot-desc">
+                @{
+                    string desc = item.Description ?? "";
+                    string shortDesc = desc.Length > 100 ? desc.Substring(0, 100) + "..." : desc;
+                }
+                <p>@shortDesc</p>
+            </div>
+            <div class="clear"></div>
+        }
+
+    </div>
+    @await Component.InvokeAsync("Partial5")
+</div>

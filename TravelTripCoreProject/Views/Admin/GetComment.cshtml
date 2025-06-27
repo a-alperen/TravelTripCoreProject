@@ -1,0 +1,26 @@
+﻿@model TravelTripCoreProject.Models.Classes.Comment
+@{
+    ViewBag.Title = "GetComment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yorumu Güncelle</h2>
+<br />
+@using (Html.BeginForm("UpdateComment", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(x => x.Id)
+    @Html.TextBoxFor(x => x.Id, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    @Html.LabelFor(x => x.Username, "Kullanıcı Adı")
+    @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Email, "Email")
+    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.UserComment, "Yorum")
+    @Html.TextAreaFor(x => x.UserComment, new { @class = "form-control", rows = 15, cols = 1 })
+    <br />
+    <button class="btn btn-success">Yorum Güncelle</button>
+}
+

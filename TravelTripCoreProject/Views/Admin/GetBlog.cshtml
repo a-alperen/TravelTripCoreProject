@@ -1,0 +1,29 @@
+﻿@model TravelTripCoreProject.Models.Classes.Blog
+@{
+    ViewBag.Title = "GetBlog";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Blog Güncelle</h2>
+<br />
+@using (Html.BeginForm("UpdateBlog", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(x => x.Id)
+    @Html.TextBoxFor(x => x.Id, new { @class = "form-control",@readonly= "readonly" })
+    <br />
+    @Html.LabelFor(x => x.Title, "Başlık")
+    @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.DateTime, "Tarih")
+    @Html.TextBoxFor(x => x.DateTime, Model.DateTime.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })
+    <br />
+    @Html.LabelFor(x => x.BlogImage, "Resim Linki")
+    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Description, "Açıklama")
+    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", rows = 15, cols = 1 })
+    <br />
+    <button class="btn btn-success">Blog Güncelle</button>
+}
+
