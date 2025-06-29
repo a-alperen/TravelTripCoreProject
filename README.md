@@ -16,11 +16,11 @@ ASP.NET Core MVC kullanılarak geliştirilmiş, blog ve seyahat temalı bir içe
 - Katmanlı mimari ile yapılandırılmıştır
 
 ## 📸 Ekran Görüntüleri
-[![Main Page](Images/MainPage.png)](Images/MainPage.png)
-[![Admin Panel](Images/AdminPanel.png)](Images/AdminPanel.png)
-[![Blogs Page](Images/BlogsPage.png)](Images/BlogsPage.png)
-[![Blog Detail Page](Images/BlogDetailPage.png)](Images/BlogDetailPage.png)
-[![Comments](Images/Comments.png)](Images/Comments.png)
+[![Main Page](TravelTripCoreProject/Images/MainPage.png)](TravelTripCoreProject/Images/MainPage.png)
+[![Admin Panel](TravelTripCoreProject/Images/AdminPanel.png)](TravelTripCoreProject/Images/AdminPanel.png)
+[![Blogs Page](TravelTripCoreProject/Images/BlogsPage.png)](TravelTripCoreProject/Images/BlogsPage.png)
+[![Blog Detail Page](TravelTripCoreProject/Images/BlogDetailPage.png)](TravelTripCoreProject/Images/BlogDetailPage.png)
+[![Comments](TravelTripCoreProject/Images/Comments.png)](TravelTripCoreProject/Images/Comments.png)
 
 ## ⚙️ Kurulum
 
