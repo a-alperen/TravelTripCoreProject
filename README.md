@@ -23,24 +23,24 @@ ASP.NET Core MVC kullanılarak geliştirilmiş, blog ve seyahat temalı bir içe
 [![Comments](TravelTripCoreProject/Images/Comments.png)](TravelTripCoreProject/Images/Comments.png)
 
 ## ⚙️ Kurulum
--.NET SDK’nın bilgisayarınızda kurulu olduğundan emin olun. https://dotnet.microsoft.com/download adresinden uygun sürümü indirip yükleyebilirsiniz.
+- .NET SDK’nın bilgisayarınızda kurulu olduğundan emin olun. https://dotnet.microsoft.com/download adresinden uygun sürümü indirip yükleyebilirsiniz.
 
--Projeyi klonlayın veya ZIP olarak indirip açın.
+- Projeyi klonlayın veya ZIP olarak indirip açın.
 
--Komut satırında proje dizinine gidin.
+- Komut satırında proje dizinine gidin.
 
--Bağımlılıkları yüklemek için şu komutu çalıştırın:
+- Bağımlılıkları yüklemek için şu komutu çalıştırın:
 dotnet restore
 
--appsettings.json dosyasındaki ConnectionStrings kısmını kendi veritabanı ortamınıza göre düzenleyin.
+- appsettings.json dosyasındaki ConnectionStrings kısmını kendi veritabanı ortamınıza göre düzenleyin.
 
--Veritabanını güncellemek için:
+- Veritabanını güncellemek için:
 dotnet ef database update
 
--Uygulamayı başlatmak için:
+- Uygulamayı başlatmak için:
 dotnet run
 veya Visual Studio ile projeyi açıp “Run” tuşuna basabilirsiniz.
 
--Projeyi çalıştırın
+- Projeyi çalıştırın
 dotnet run
 veya Visual Studio ile projeyi açıp çalıştırabilirsiniz.
