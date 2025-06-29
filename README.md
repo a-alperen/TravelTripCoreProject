@@ -22,8 +22,4 @@ ASP.NET Core MVC kullanılarak geliştirilmiş, blog ve seyahat temalı bir içe
 [![Blog Detail Page](TravelTripCoreProject/Images/BlogDetailPage.png)](TravelTripCoreProject/Images/BlogDetailPage.png)
 [![Comments](TravelTripCoreProject/Images/Comments.png)](TravelTripCoreProject/Images/Comments.png)
 
-## ⚙️ Kurulum
-
-1. `dotnet ef database update`
-2. `dotnet run` veya Visual Studio ile çalıştır
 
