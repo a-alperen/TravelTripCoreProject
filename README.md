@@ -16,8 +16,11 @@ ASP.NET Core MVC kullanılarak geliştirilmiş, blog ve seyahat temalı bir içe
 - Katmanlı mimari ile yapılandırılmıştır
 
 ## 📸 Ekran Görüntüleri
-
-_(buraya 2-3 ekran görüntüsü ekle)_
+[![Image](https://i.hizliresim.com/519qsh5.png)](https://hizliresim.com/519qsh5)
+[![Image](https://i.hizliresim.com/8vzgxlq.png)](https://hizliresim.com/8vzgxlq)
+[![Image](https://i.hizliresim.com/n0ct4zb.png)](https://hizliresim.com/n0ct4zb)
+[![Image](https://i.hizliresim.com/c5z2zao.png)](https://hizliresim.com/c5z2zao)
+[![Image](https://i.hizliresim.com/1m0pklq.png)](https://hizliresim.com/1m0pklq)
 
 ## ⚙️ Kurulum
 
