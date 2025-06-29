@@ -4,69 +4,61 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelTripCoreProject.Models.Classes;
-using X.PagedList;
-using X.PagedList.Extensions;
-using X.PagedList.Mvc.Core;
-using TravelTripCoreProject.Services;
 using Newtonsoft.Json;
 using TravelTripCoreProject.Models;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
+using TravelTripCoreProject.Business.Services;
+using TravelTripCoreProject.Models.ViewModels;
 
 namespace TravelTripCoreProject.Controllers
 {
-    public class BlogController(Context context, GraphQLService graphQLService) : Controller
+    public class BlogController(IBlogService blogService, ICommentService commentService) : Controller
     {
-        private readonly Context _context = context;
-        private readonly GraphQLService _graphQLService = graphQLService;
+        private readonly IBlogService _blogService = blogService;
+        private readonly ICommentService _commentService = commentService;
 
-        //public IActionResult Index(int? i)
-        //{
-        //    int pageNumber = i ?? 1;
-        //    int pageSize = 5;
-
-        //    var viewModel = new BlogListViewModel
-        //    {
-        //        Blogs = _context.Blogs.OrderByDescending(x => x.Id).ToPagedList(pageNumber, pageSize),
-        //        LastBlogs = [.. _context.Blogs.OrderByDescending(x => x.Id).Take(3)]
-        //    };
-
-        //    ViewData["Blogs"] = viewModel.Blogs;
-        //    ViewData["LastBlogs"] = viewModel.LastBlogs;
-
-        //    return View(viewModel);
-        //}
-        public async Task<IActionResult> Index(int? i)
+        public IActionResult Index(int? i)
         {
             int pageSize = 5;
             int pageNumber = i ?? 1;
             int skip = (pageNumber - 1) * pageSize;
 
-            var pagedBlogs = await _graphQLService.GetPagedBlogsAsync(skip, pageSize);
+            var blogs = _blogService.GetPagedBlogs(skip, pageSize).ToList();
+            int totalItems = _blogService.GetAllBlogs().Count;
 
             var viewModel = new BlogListViewModel
             {
-                Blogs = pagedBlogs.items,
-                TotalItems = pagedBlogs.totalItems,
-                HasNextPage = pagedBlogs.hasNextPage,
-                HasPreviousPage = pagedBlogs.hasPreviousPage,
+                Blogs = blogs,
+                TotalItems = totalItems,
+                HasNextPage = (skip + pageSize) < totalItems,
+                HasPreviousPage = pageNumber > 1,
                 CurrentPage = pageNumber,
                 PageSize = pageSize
             };
 
             return View(viewModel);
         }
-        public async Task<IActionResult> BlogDetail(int id)
+        public IActionResult BlogDetail(int id)
         {
-            var blog = await _graphQLService.GetBlogByIdAsync(id);
+            var blog = _blogService.GetById(id);
             if (blog == null)
                 return NotFound();
-
-            return View(blog);
+            BlogDetailViewModel viewModel = new BlogDetailViewModel
+            {
+                Blog = blog,
+                Comments = _commentService.GetCommentsByBlogId(id),
+                LastBlogs = _blogService.GetAllBlogs()
+                    .OrderByDescending(b => b.DateTime)
+                    .Take(3)
+                    .ToList()
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> LeaveComment(int blogId, string username, string email, string userComment)
+        public IActionResult LeaveComment(int blogId, string username, string email, string userComment)
         {
-            var comment = await _graphQLService.AddCommentAsync(blogId, username, email, userComment);
+            var comment = _commentService.AddComment(blogId, username, email, userComment);
             if (comment != null)
             {
                 // Yorum başarıyla eklendi.

@@ -1,6 +1,6 @@
 ﻿@using TravelTripCoreProject.Models.Classes
 
-@model TravelTripCoreProject.Models.Classes.Blog
+@model TravelTripCoreProject.Models.ViewModels.BlogDetailViewModel
 @{
     ViewBag.Title = "BlogDetail";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -35,10 +35,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="container">
             <div class="col-md-8 single-main">
                 <div class="single-grid">
-                    <img src="@Model.BlogImage" alt="" />
-                    <h2>@Model.Title</h2>
+                    <img src="@Model.Blog.BlogImage" alt="" />
+                    <h2>@Model.Blog.Title</h2>
                     <p>
-                        @Model.Description
+                        @Model.Blog.Description
                     </p>
                 </div>
                 @if(Model.Comments != null && Model.Comments.Any()) 
@@ -58,12 +58,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     }
                 }
                 
-                @await Component.InvokeAsync("LeaveComment", new { id = Model.Id })
+                @await Component.InvokeAsync("LeaveComment", new { id = Model.Blog.Id })
 
 
             </div>
 
-            @* <div class="col-md-4 side-content">
+            <div class="col-md-4 side-content">
                 <div class="recent">
                     <h3>Son Bloglar</h3>
                     <ul>
@@ -73,7 +73,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         }
                     </ul>
                 </div>
-            </div> *@
+            </div>
         </div>
     </div>
 

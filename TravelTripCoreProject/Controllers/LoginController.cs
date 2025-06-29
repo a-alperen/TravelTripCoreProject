@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using TravelTripCoreProject.Models.Classes;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
 
 namespace TravelTripCoreProject.Controllers
 {

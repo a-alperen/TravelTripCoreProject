@@ -1,10 +1,9 @@
-﻿using EntityGraphQL.Schema;
-using EntityGraphQL.Schema.FieldExtensions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using TravelTripCoreProject.Models.Classes;
 
-namespace TravelTripCoreProject.Models.Classes;
+namespace TravelTripCoreProject.DataAccessLayer.Contexts;
 
 public partial class Context(DbContextOptions<Context> options) : DbContext(options)
 {
@@ -13,7 +12,6 @@ public partial class Context(DbContextOptions<Context> options) : DbContext(opti
     public virtual DbSet<Address> Addresses { get; set; }
 
     public virtual DbSet<Admin> Admins { get; set; }
-    [UseOffsetPaging(defaultPageSize: 5, maxPageSize: 20)]
     public virtual DbSet<Blog> Blogs { get; set; }
 
     public virtual DbSet<Comment> Comments { get; set; }
@@ -21,8 +19,6 @@ public partial class Context(DbContextOptions<Context> options) : DbContext(opti
     public virtual DbSet<Contact> Contacts { get; set; }
 
     public virtual DbSet<MainPage> MainPages { get; set; }
-
-    public virtual DbSet<MigrationHistory> MigrationHistories { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -81,17 +77,6 @@ public partial class Context(DbContextOptions<Context> options) : DbContext(opti
             entity.HasKey(e => e.Id).HasName("PK_dbo.MainPages");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-        });
-
-        modelBuilder.Entity<MigrationHistory>(entity =>
-        {
-            entity.HasKey(e => new { e.MigrationId, e.ContextKey }).HasName("PK_dbo.__MigrationHistory");
-
-            entity.ToTable("__MigrationHistory");
-
-            entity.Property(e => e.MigrationId).HasMaxLength(150);
-            entity.Property(e => e.ContextKey).HasMaxLength(300);
-            entity.Property(e => e.ProductVersion).HasMaxLength(32);
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TravelTripCoreProject.Models.Classes;
-using EntityGraphQL.AspNet;
-using TravelTripCoreProject.Services;
-using TravelTripCoreProject.GraphQL;
-using EntityGraphQL.Schema;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
+using TravelTripCoreProject.DataAccessLayer.Repositories;
+using TravelTripCoreProject.Business.Services;
 
 namespace TravelTripCoreProject
 {
@@ -14,7 +12,6 @@ namespace TravelTripCoreProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddHttpClient<GraphQLService>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
             builder.Services.AddAuthentication("CookieAuth")
@@ -25,17 +22,19 @@ namespace TravelTripCoreProject
             builder.Services.AddDbContext<Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             
-            // ---- GRAPHQL SCHEMA ----
-            builder.Services.AddGraphQLSchema<Context>(options =>
-            {
-                options.ConfigureSchema = (schema) =>
-                {
-                    schema.AddMutationsFrom<CommentMutations>();
-                    schema.AddMutationsFrom<ContactMutations>();
-                    schema.AddMutationsFrom<BlogMutations>();
-                };
-            }
-            );
+            builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+            builder.Services.AddScoped<IBlogService, BlogService>();
+            
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+
+            builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+            builder.Services.AddScoped<IAboutService, AboutService>();
+
+            builder.Services.AddScoped<IContactRepository, ContactRepository>();
+            builder.Services.AddScoped<IContactService, ContactService>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -53,9 +52,6 @@ namespace TravelTripCoreProject
             app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            // ---- GRAPHQL ENDPOINT EKLE ----
-            app.MapGraphQL<Context>();
 
             app.MapControllerRoute(
                 name: "default",

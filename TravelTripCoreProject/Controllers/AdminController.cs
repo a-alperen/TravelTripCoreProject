@@ -4,25 +4,27 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TravelTripCoreProject.Business.Services;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
 using TravelTripCoreProject.Models.Classes;
-using TravelTripCoreProject.Services;
 
 namespace TravelTripCoreProject.Controllers
 {
-    public class AdminController(Context context, GraphQLService graphQLService) : Controller
+    public class AdminController(IBlogService blogService, ICommentService commentService, IContactService contactService) : Controller
     {
-        private readonly Context _context = context;
-        private readonly GraphQLService _graphQLService = graphQLService;
+        private readonly IBlogService _blogService = blogService;
+        private readonly ICommentService _commentService = commentService;
+        private readonly IContactService _contactService = contactService;
 
         [Authorize]
         public IActionResult Index()
         {
-            var values = _context.Blogs.ToList();
+            var values = _blogService.GetAllBlogs();
             return View(values);
         }
         public IActionResult Contact()
         {
-            var values = _context.Contacts.ToList();
+            var values = _contactService.GetAllContacts();
             return View(values);
         }
         [HttpGet]
@@ -33,60 +35,42 @@ namespace TravelTripCoreProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewBlog(Blog blog)
+        public IActionResult NewBlog(Blog blog)
         {
-            try
+            if(_blogService.AddBlog(blog))
             {
-                var result = await _graphQLService.AddBlogAsync(
-                    blog.Title ?? "",
-                    blog.Description ?? "",
-                    blog.BlogImage ?? "",
-                    blog.DateTime
-                );
-                if (result != null)
-                {
-                    TempData["BlogResult"] = "Blog başarıyla eklendi!";
-                }
-                else
-                {
-                    TempData["BlogResult"] = "Blog eklenemedi!";
-                }
+                TempData["Message"] = "Blog başarıyla eklendi!";
             }
-            catch (Exception ex)
+            else
             {
-                TempData["BlogResult"] = "Hata: " + ex.Message;
+                TempData["Message"] = "Blog eklenemedi!";
             }
+
             return RedirectToAction("Index");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteBlog(int id)
+        public IActionResult DeleteBlog(int id)
         {
-            var result = await _graphQLService.DeleteBlogAsync(id);
+            var result = _blogService.DeleteBlog(id);
             TempData["Message"] = result ? "Blog silindi!" : "Hata!";
             return RedirectToAction("Index");
         }
 
         public IActionResult GetBlog(int id)
         {
-            var blog = _context.Blogs.Find(id);
+            var blog = _blogService.GetById(id);
             return View("GetBlog", blog);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateBlog(Blog blog)
+        public IActionResult UpdateBlog(Blog blog)
         {
             try
             {
-                var result = await _graphQLService.UpdateBlogAsync(
-                    blog.Id,
-                    blog.Title ?? "",
-                    blog.Description ?? "",
-                    blog.BlogImage ?? "",
-                    blog.DateTime
-                );
-                if (result != null)
+                bool result = _blogService.UpdateBlog(blog);
+                if (result)
                 {
                     TempData["BlogResult"] = "Blog başarıyla güncellendi!";
                 }
@@ -105,40 +89,28 @@ namespace TravelTripCoreProject.Controllers
 
         public IActionResult CommentList()
         {
-            var comments = _context.Comments
-                .Include(x => x.Blog) // Blog verisini de getir
-                .ToList();
+            var comments = _commentService.GetAllComments();
             return View(comments);
         }
 
         public IActionResult DeleteComment(int id)
         {
-            var comment = _context.Comments.Find(id);
-            if (comment != null)
-            {
-                _context.Comments.Remove(comment);
-                _context.SaveChanges();
-            }
+            var result = _commentService.DeleteComment(id);
+            TempData["Message"] = result ? "Yorum silindi!" : "Hata!";
             return RedirectToAction("CommentList");
         }
 
         public IActionResult GetComment(int id)
         {
-            var comment = _context.Comments.Find(id);
+            var comment = _commentService.GetCommentById(id);
             return View("GetComment", comment);
         }
 
         [ValidateAntiForgeryToken]
         public IActionResult UpdateComment(Comment comment)
         {
-            var cmmnt = _context.Comments.Find(comment.Id);
-            if (cmmnt != null)
-            {
-                cmmnt.Username = comment.Username;
-                cmmnt.Email = comment.Email;
-                cmmnt.UserComment = comment.UserComment;
-                _context.SaveChanges();
-            }
+            var result = _commentService.UpdateComment(comment);
+            TempData["Message"] = result ? "Blog düzenlendi!" : "Hata!";
             return RedirectToAction("CommentList");
         }
     }

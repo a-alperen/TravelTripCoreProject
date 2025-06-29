@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelTripCoreProject.Models.Classes;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
 
 namespace TravelTripCoreProject.ViewsComponents
 {

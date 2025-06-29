@@ -1,5 +1,4 @@
-﻿using EntityGraphQL.Schema;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TravelTripCoreProject.Models.Classes;

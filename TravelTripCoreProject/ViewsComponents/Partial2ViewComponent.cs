@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelTripCoreProject.Models.Classes;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
+
 namespace TravelTripCoreProject.ViewsComponents
 {
     public class Partial2ViewComponent(Context context) : ViewComponent

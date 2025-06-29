@@ -2,26 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TravelTripCoreProject.Business.Services;
+using TravelTripCoreProject.DataAccessLayer.Contexts;
 using TravelTripCoreProject.Models.Classes;
-using TravelTripCoreProject.Services;
 
 namespace TravelTripCoreProject.Controllers
 {
-    public class MainController(Context context, GraphQLService graphQLService) : Controller
+    public class MainController(IBlogService blogService, IContactService contactService, IAboutService aboutService) : Controller
     {
-        // GET: Main
-        private readonly Context _context = context;
-        private readonly GraphQLService _graphQLService = graphQLService;
+        private readonly IBlogService _blogService = blogService;
+        private readonly IContactService _contactService = contactService;
+        private readonly IAboutService _aboutService = aboutService;
 
         public IActionResult Index()
         {
-            var values = _context.Blogs.Take(6).ToList();
+            var values = _blogService.GetAllBlogs().Take(6).ToList();
 
             return View(values);
         }
         public IActionResult About()
         {
-            var values = _context.Abouts.ToList();
+            var values = _aboutService.GetAll();
             return View(values);
         }
         public IActionResult Contact()
@@ -29,10 +30,16 @@ namespace TravelTripCoreProject.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Contact(string name, string email, string message, string subject)
+        public IActionResult Contact(string name, string email, string message, string subject)
         {
-            var result = await _graphQLService.AddContactAsync(name, email, message, subject);
-            ViewBag.Message = result != null ? "Mesajınız alındı!" : "Bir hata oluştu.";
+            var result = _contactService.AddContact(new Contact
+            {
+                NameSurname = name,
+                Email = email,
+                Message = message,
+                Subject = subject
+            });
+            ViewBag.Message = result ? "Mesajınız alındı!" : "Bir hata oluştu.";
             return View();
         }
     }
